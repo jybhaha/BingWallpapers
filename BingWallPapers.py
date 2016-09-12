@@ -4,6 +4,8 @@ import os
 import datetime
 import win32gui,win32con,win32api
 import shutil  #文件复制
+import re
+from PIL import Image
 
 
 def downloadWallpapers():
@@ -40,6 +42,7 @@ def moveFocusToWallpapersDIR(sourceDir, targetDir):
 			shutil.copy(sourceFile, targetDir)
 
 def changeName(targetDir):
+	#重命名之前先保存，防止出错
 	for files in os.listdir(targetDir):
 		targetFile = os.path.join(targetDir, files)
 		if os.path.splitext(targetFile)[-1] == '.jpg':
@@ -53,12 +56,23 @@ def changeName(targetDir):
 			os.rename(targetFile, targetFile + '.jpg')
 
 
+def deleteWrongPicture(targetDir):#find the wrong Wallpapers
+	for files in os.listdir(targetDir):
+		targetFile = os.path.join(targetDir, files)
+		img = Image.open(targetFile)
+		patern=re.compile(r"\d+")
+		#删除横板壁纸，不然桌面拉伸太难看
+		if patern.findall(str(img.size))[0] < patern.findall(str(img.size))[1]:
+			img.close()#先关闭文件，不然下面删除失败
+			os.remove(targetFile)
+
 if __name__ == '__main__':
 	downloadWallpapers()
 	sourceDir = 'c:\\Users\\jiao\\AppData\\Local\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\Assets'
 	targetDir = 'f:\\MyProject\\Interest\\BingWallPapersJioa\\Bing'
 	moveFocusToWallpapersDIR(sourceDir, targetDir)
 	changeName(targetDir)
+	deleteWrongPicture(targetDir)
 
 
 

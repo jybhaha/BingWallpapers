@@ -1,4 +1,5 @@
-#从微软bing网站下载壁纸并修改本地壁纸
+# 从微软bing网站下载壁纸并修改本地壁纸
+
 ----------
 2016-09-12更新
 今天发现windows聚焦壁纸更好看，所以就想把这个壁纸也扒下来，放在一个文件夹内，然后幻灯片放映。
@@ -15,6 +16,13 @@ C:\用户\当前电脑登录的账户\AppData\Local\Packages\Microsoft.Windows.C
 从Bing首页扒下来的壁纸用'.bmp'后缀名，聚焦壁纸用'.jpg'后缀名。
 
 要注意，每次copy聚焦壁纸时，要把以前的jpg壁纸删除。
+
+另外：
+
+windows聚焦会保存两个版本的壁纸，因为竖板的壁纸会出错，所以只保留横板的壁纸。
+
+最后：
+只需用设置windows壁纸为幻灯片放映，文件夹设置为自己的壁纸保存目录即可。
 
 
 ---------
@@ -35,6 +43,8 @@ C:\用户\当前电脑登录的账户\AppData\Local\Packages\Microsoft.Windows.C
 **必须的python组件**
  - [requests][1]
  - win32Api [download][2]
+ - pillow
+ - sthtil
 
 ----------
 python主要代码：

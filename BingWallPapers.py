@@ -36,24 +36,41 @@ def changeWallPapers():
 									  1 + 2)
 
 def moveFocusToWallpapersDIR(sourceDir, targetDir):
-	for files in os.listdir(sourceDir):
-		sourceFile = os.path.join(sourceDir, files)
-		if os.path.getsize(sourceFile) > 300000:
-			shutil.copy(sourceFile, targetDir)
+	for files2 in os.listdir(targetDir):
+		for files in os.listdir(sourceDir):
+			sourceFile = os.path.join(sourceDir, files)
+			targetFile = os.path.join(targetDir, files2)
+			#if files.split('.')[0] == files2.split('.')[0]:
+				#print('$$$$$$$$$$$$')
+				#print(files.split('.')[0])
+				#print(files2.split('.')[0])
+			#print('*********'+ files.split('.')[0])
+			#print(files2.split('.')[0])
 
-def changeName(targetDir):
+			if (os.path.getsize(sourceFile) > 300000):
+				if files.split('.')[0] != files2.split('.')[0]:
+					shutil.copy(sourceFile, targetDir)
+				else:
+					if os.path.isfile(targetFile):
+						os.remove(targetFile)
+						shutil.copy(sourceFile, targetDir)
+
+
+def changeName(sourceDir,targetDir):
 	#重命名之前先保存，防止出错
-	for files in os.listdir(targetDir):
-		targetFile = os.path.join(targetDir, files)
-		if os.path.splitext(targetFile)[-1] == '.jpg':
-			os.remove(targetFile)
+
+	#for files in os.listdir(targetDir):
+		#targetFile = os.path.join(targetDir, files)
+		#if os.path.splitext(targetFile)[-1] == '.jpg':
+			#os.remove(targetFile)
 
 	for files in os.listdir(targetDir):
 		targetFile = os.path.join(targetDir, files)
-		if os.path.splitext(targetFile)[-1] == '.bmp':
+		if os.path.splitext(targetFile)[-1] == '.bmp' or os.path.splitext(targetFile)[-1] == '.jpg':
 			continue
 		else:
 			os.rename(targetFile, targetFile + '.jpg')
+
 
 
 def deleteWrongPicture(targetDir):#find the wrong Wallpapers
@@ -67,13 +84,13 @@ def deleteWrongPicture(targetDir):#find the wrong Wallpapers
 			os.remove(targetFile)
 
 if __name__ == '__main__':
-	downloadWallpapers()
+
 	sourceDir = 'c:\\Users\\jiao\\AppData\\Local\\Packages\\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\\LocalState\Assets'
 	targetDir = 'f:\\MyProject\\Interest\\BingWallPapersJioa\\Bing'
 	moveFocusToWallpapersDIR(sourceDir, targetDir)
-	changeName(targetDir)
+	changeName(sourceDir, targetDir)
 	deleteWrongPicture(targetDir)
-
+	downloadWallpapers()
 
 
 
